@@ -8,12 +8,11 @@ public class Account : BaseEntity
 	public decimal TotalAssets { get; }
 	public DateTime CreatedAt { get; }
 	public DateTime UpdatedAt { get; }
-	public Client.Client Client { get; }
+	// public Client.Client Client { get; }
 
 	public Account
 	(
-		string clientId, decimal balance, decimal investmentsValue, decimal totalAssets,
-		Client.Client client
+		string clientId, decimal balance, decimal investmentsValue, decimal totalAssets
 	)
 	{
 		ClientId = clientId;
@@ -22,6 +21,6 @@ public class Account : BaseEntity
 		TotalAssets = totalAssets;
 		CreatedAt = DateTime.Now;
 		UpdatedAt = DateTime.Now;
-		Client = client;
+		// Client = client;
 	}
 }
