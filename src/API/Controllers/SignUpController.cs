@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
-[Route("api/v1/[controller]")]
+[Route("api/v1/register")]
 public class SignUpController : ControllerBase
 {
 	private readonly ISignUpUseCase _signUpUseCase;
@@ -17,7 +17,10 @@ public class SignUpController : ControllerBase
 	[HttpPost]
 	public async Task<IActionResult> SignUp([FromBody] SignUpRequest request)
 	{
+		if (ModelState.IsValid is false)
+			return BadRequest(ModelState);
+
 		var output = await _signUpUseCase.ExecuteAsync(request);
-		return output is null ? BadRequest() : Created("Account Created", null);
+		return output is null ? BadRequest() : Ok();
 	}
 }

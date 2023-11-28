@@ -23,8 +23,8 @@ public class AccountsRepository : IAccountsRepository
 			Balance = account.Balance,
 			InvestmentsValue = account.InvestmentsValue,
 			TotalAssets = account.TotalAssets,
-			CreatedAt = account.CreatedAt,
-			UpdatedAt = account.UpdatedAt
+			CreatedAt = DateTime.Now,
+			UpdatedAt = DateTime.Now
 		};
 
 		if (await _context.Accounts.AddAsync(accountModel) is null)

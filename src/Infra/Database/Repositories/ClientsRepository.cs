@@ -2,6 +2,7 @@ using Application.Interfaces.Repositories;
 using Domain.Entities.Client;
 using Infra.Database.Context;
 using Infra.Database.models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Database.Repositories;
 
@@ -28,5 +29,14 @@ public class ClientsRepository : IClientsRepository
 			return false;
 		_context.SaveChanges();
 		return true;
+	}
+
+	public async Task<Client?> GetByEmailAsync(string requestEmail)
+	{
+		var client = await _context.Clients.FirstOrDefaultAsync
+			(client => client.Email == requestEmail);
+		if (client is null)
+			return null;
+		return new Client(client.Name, client.Email, client.Password);
 	}
 }

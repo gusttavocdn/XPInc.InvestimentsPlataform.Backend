@@ -22,11 +22,4 @@ public class ApplicationDbContext : DbContext
 			.HasForeignKey<AccountModel>(a => a.ClientId)
 			.OnDelete(DeleteBehavior.Cascade);
 	}
-
-	// protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-	// {
-	// 	var connectionString = _configuration.GetConnectionString("MySqlConnection");
-	//
-	// 	optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-	// }
 }

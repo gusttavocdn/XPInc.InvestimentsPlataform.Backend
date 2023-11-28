@@ -1,6 +1,7 @@
 using Application.Dtos.Requests;
 using Application.Dtos.Responses;
 using Application.Interfaces.Repositories;
+using Application.Interfaces.Services;
 using Application.Interfaces.UseCases;
 using Domain.Entities.Account;
 using Domain.Entities.Client;
@@ -11,21 +12,28 @@ public class SignUpUseCase : ISignUpUseCase
 {
 	private readonly IAccountsRepository _accountRepository;
 	private readonly IClientsRepository _clientRepository;
+	private readonly IPasswordManager _passwordManager;
 
-	public SignUpUseCase(IAccountsRepository accountRepository, IClientsRepository clientRepository)
+	public SignUpUseCase
+	(
+		IAccountsRepository accountRepository, IClientsRepository clientRepository,
+		IPasswordManager passwordManager
+	)
 	{
 		_accountRepository = accountRepository;
 		_clientRepository = clientRepository;
+		_passwordManager = passwordManager;
 	}
 
 	public async Task<SignUpResponse> ExecuteAsync
 		(SignUpRequest request, CancellationToken cancellationToken = default)
 	{
-		var client = new Client(request.Name, request.Email, request.Password);
-		if (!await _clientRepository.CreateAsync(client))
+		var newClient = new Client
+			(request.Name, request.Email, _passwordManager.Hash(request.Password));
+		if (!await _clientRepository.CreateAsync(newClient))
 			return null;
 
-		var account = new Account(client.Id, 1000, 0, 1000);
+		var account = new Account(newClient.Id, 1000, 0, 1000);
 		if (!await _accountRepository.CreateAsync(account))
 			return null;
 		return new SignUpResponse();
