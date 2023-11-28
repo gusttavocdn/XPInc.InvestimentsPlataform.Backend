@@ -5,7 +5,9 @@ namespace Infra.Database.Context;
 
 public class ApplicationDbContext : DbContext
 {
-	public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+	public ApplicationDbContext
+		(DbContextOptions<ApplicationDbContext> options) : base
+		(options)
 	{
 	}
 
@@ -20,4 +22,11 @@ public class ApplicationDbContext : DbContext
 			.HasForeignKey<AccountModel>(a => a.ClientId)
 			.OnDelete(DeleteBehavior.Cascade);
 	}
+
+	// protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+	// {
+	// 	var connectionString = _configuration.GetConnectionString("MySqlConnection");
+	//
+	// 	optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+	// }
 }

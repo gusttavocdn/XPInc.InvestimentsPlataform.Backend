@@ -18,7 +18,8 @@ public class SignUpUseCase : ISignUpUseCase
 		_clientRepository = clientRepository;
 	}
 
-	public async Task<SignUpResponse> ExecuteAsync(SignUpRequest request)
+	public async Task<SignUpResponse> ExecuteAsync
+		(SignUpRequest request, CancellationToken cancellationToken = default)
 	{
 		var client = new Client(request.Name, request.Email, request.Password);
 		if (!await _clientRepository.CreateAsync(client))
