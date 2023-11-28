@@ -25,6 +25,5 @@ public class ApplicationDbContext : DbContext
 			.OnDelete(DeleteBehavior.Cascade);
 
 		modelBuilder.AssetsSeed();
-		modelBuilder.ClientsSeed();
 	}
 }
