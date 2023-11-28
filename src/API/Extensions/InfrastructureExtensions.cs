@@ -31,7 +31,9 @@ public static class InfrastructureExtensions
 
 	private static void AddRepositories(this IServiceCollection services)
 	{
-		services.AddScoped<IClientsRepository, ClientsRepository>();
-		services.AddScoped<IAccountsRepository, AccountsRepository>();
+		services
+			.AddScoped<IClientsRepository, ClientsRepository>()
+			.AddScoped<IAccountsRepository, AccountsRepository>()
+			.AddScoped<IAssetsRepository, AssetsRepository>();
 	}
 }

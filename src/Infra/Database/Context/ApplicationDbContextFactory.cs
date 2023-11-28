@@ -8,6 +8,7 @@ public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<Applicati
 	public ApplicationDbContext CreateDbContext(string[] args)
 	{
 		var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+		// TODO: Change this to a environment variable
 		var connectionString = "Server=localhost; Database=Investments; Uid=root; Pwd=passwd;";
 		optionsBuilder.UseMySql
 		(

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Infra.Database.models;
 
@@ -11,12 +12,15 @@ public class AccountModel
 	public string ClientId { get; set; } = string.Empty;
 
 	[Required]
+	[Column(TypeName = "decimal(10, 2)")]
 	public decimal Balance { get; set; }
 
 	[Required]
+	[Column(TypeName = "decimal(10, 2)")]
 	public decimal InvestmentsValue { get; set; }
 
 	[Required]
+	[Column(TypeName = "decimal(10, 2)")]
 	public decimal TotalAssets { get; set; }
 
 	[Required]

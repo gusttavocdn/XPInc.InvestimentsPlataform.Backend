@@ -22,17 +22,4 @@
     <ItemGroup>
         <ProjectReference Include="..\Application\Application.csproj"/>
     </ItemGroup>
-
-    <ItemGroup>
-        <Compile Remove="Database\Migrations\**"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <EmbeddedResource Remove="Database\Migrations\**"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <None Remove="Database\Migrations\**"/>
-    </ItemGroup>
-
 </Project>
