@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Database.models;
 
+[Index("Email", IsUnique = true)]
 public class ClientModel
 {
 	[Key] [Required]

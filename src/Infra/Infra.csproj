@@ -24,14 +24,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Remove="Database\Migrations\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <EmbeddedResource Remove="Database\Migrations\**" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="Database\Migrations\**" />
+        <Folder Include="Database\Migrations\"/>
     </ItemGroup>
 </Project>

@@ -20,4 +20,7 @@ public class AssetModel
 	[Required]
 	[Column(TypeName = "decimal(10, 2)")]
 	public decimal Price { get; set; }
+
+	public virtual IEnumerable<PortfolioModel> Portfolios { get; set; } = null!;
+	public virtual IEnumerable<InvestmentsHistoryModel> InvestmentsHistory { get; set; } = null!;
 }
