@@ -1,4 +1,4 @@
-namespace Domain.Entities.Account;
+namespace Domain.Entities;
 
 public class Account : BaseEntity
 {

@@ -1,5 +1,5 @@
 using Application.Interfaces.Repositories;
-using Domain.Entities.Account;
+using Domain.Entities;
 using Infra.Database.Context;
 using Infra.Database.models;
 
@@ -22,9 +22,7 @@ public class AccountsRepository : IAccountsRepository
 			ClientId = account.ClientId,
 			Balance = account.Balance,
 			InvestmentsValue = account.InvestmentsValue,
-			TotalAssets = account.TotalAssets,
-			CreatedAt = DateTime.Now.ToString(),
-			UpdatedAt = DateTime.Now.ToString()
+			TotalAssets = account.TotalAssets
 		};
 
 		if (await _context.Accounts.AddAsync(accountModel) is null)

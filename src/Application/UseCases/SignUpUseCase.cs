@@ -3,8 +3,7 @@ using Application.Dtos.Responses;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using Application.Interfaces.UseCases;
-using Domain.Entities.Account;
-using Domain.Entities.Client;
+using Domain.Entities;
 
 namespace Application.UseCases;
 
