@@ -1,10 +1,12 @@
 using Application.Dtos.Requests;
 using Application.Interfaces.UseCases;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
 [Route("api/v1/assets")]
+[Authorize]
 public class AssetsController : ControllerBase
 {
 	private readonly IGetAllAssetsUseCase _getAllAssetsUseCase;

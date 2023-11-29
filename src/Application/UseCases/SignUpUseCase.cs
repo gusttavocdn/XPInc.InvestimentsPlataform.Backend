@@ -32,7 +32,7 @@ public class SignUpUseCase : ISignUpUseCase
 		if (!await _clientRepository.CreateAsync(newClient))
 			return null;
 
-		var account = new Account(newClient.Id, 1000, 0, 1000);
+		var account = new Account(newClient.Id, 0, 0, 0);
 		if (!await _accountRepository.CreateAsync(account))
 			return null;
 		return new SignUpResponse();

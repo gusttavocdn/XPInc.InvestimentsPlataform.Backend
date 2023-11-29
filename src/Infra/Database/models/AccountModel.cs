@@ -24,10 +24,10 @@ public class AccountModel
 	public decimal TotalAssets { get; set; }
 
 	[Required]
-	public string CreatedAt { get; set; } = null!;
+	public string CreatedAt { get; set; }
 
 	[Required]
-	public string UpdatedAt { get; set; } = null!;
+	public string UpdatedAt { get; set; }
 
 	public virtual ClientModel Client { get; set; } = null!;
 	public virtual IEnumerable<TransactionHistoryModel> TransactionHistory { get; set; } = null!;

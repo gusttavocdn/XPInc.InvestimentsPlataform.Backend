@@ -27,7 +27,7 @@ public class ClientsRepository : IClientsRepository
 
 		if (await _context.Clients.AddAsync(clientModel) is null)
 			return false;
-		_context.SaveChanges();
+		await _context.SaveChangesAsync();
 		return true;
 	}
 

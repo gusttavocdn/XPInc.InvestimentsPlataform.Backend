@@ -4,6 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddServices();
 builder.Services.AddUseCases();
 builder.Services.AddControllers();
@@ -22,6 +23,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseAuthorization();
 

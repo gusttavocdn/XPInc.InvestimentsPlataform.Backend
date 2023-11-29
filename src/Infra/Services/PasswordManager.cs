@@ -12,6 +12,6 @@ public class PasswordManager : IPasswordManager
 
 	public bool Verify(string password, string hash)
 	{
-		return BCrypt.Net.BCrypt.EnhancedVerify(password, hash);
+		return BCrypt.Net.BCrypt.EnhancedVerify(password, hash, HashType.SHA256);
 	}
 }
