@@ -26,7 +26,8 @@ public static class ServiceCollectionExtensions
 			.AddScoped<ISellAssetUseCase, SellAssetUseCase>()
 			.AddScoped<IDepositUseCase, DepositUseCase>()
 			.AddScoped<IWithdrawUseCase, WithdrawUseCase>()
-			.AddScoped<IGetAccountBalanceUseCase, GetAccountBalanceUseCase>();
+			.AddScoped<IGetAccountBalanceUseCase, GetAccountBalanceUseCase>()
+			.AddScoped<IGetTransactionsUseCase, GetTransactionsUseCase>();
 	}
 
 	public static void AddServices(this IServiceCollection services)

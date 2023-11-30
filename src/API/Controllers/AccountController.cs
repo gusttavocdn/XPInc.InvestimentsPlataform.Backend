@@ -53,4 +53,14 @@ public class AccountController : ControllerBase
 		var output = await _withdrawUseCase.ExecuteAsync(request, token);
 		return output is null ? BadRequest() : Ok(output);
 	}
+
+	[HttpGet("transactions")]
+	public async Task<IActionResult> GetTransactionsExtract()
+	{
+		var authorizationHeader = Request.Headers["Authorization"].ToString();
+		var token = authorizationHeader["Bearer ".Length..].Trim();
+
+		var output = await _getAccountBalanceUseCase.ExecuteAsync(new GetBalanceRequest(), token);
+		return output is null ? BadRequest() : Ok(output);
+	}
 }
