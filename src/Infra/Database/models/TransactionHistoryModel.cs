@@ -16,12 +16,12 @@ public class TransactionHistoryModel
 	public decimal Value { get; set; }
 
 	[Required]
-	public TransactionType TransactionType { get; set; }
+	public string TransactionType { get; set; }
 
 	[Required]
 	public string CreatedAt { get; set; } = null!;
 
-	public virtual required AccountModel Account { get; set; }
+	public virtual AccountModel Account { get; set; }
 }
 
 public enum TransactionType
