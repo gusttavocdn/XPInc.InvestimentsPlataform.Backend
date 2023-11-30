@@ -12,16 +12,19 @@ public class AccountController : ControllerBase
 	private readonly IDepositUseCase _depositUseCase;
 	private readonly IWithdrawUseCase _withdrawUseCase;
 	private readonly IGetAccountBalanceUseCase _getAccountBalanceUseCase;
+	private readonly IGetTransactionsUseCase _getTransactionsUseCase;
 
 	public AccountController
 	(
 		IDepositUseCase depositUseCase, IWithdrawUseCase withdrawUseCase,
-		IGetAccountBalanceUseCase getAccountBalanceUseCase
+		IGetAccountBalanceUseCase getAccountBalanceUseCase,
+		IGetTransactionsUseCase getTransactionsUseCase
 	)
 	{
 		_depositUseCase = depositUseCase;
 		_withdrawUseCase = withdrawUseCase;
 		_getAccountBalanceUseCase = getAccountBalanceUseCase;
+		_getTransactionsUseCase = getTransactionsUseCase;
 	}
 
 	[HttpGet("balance")]
@@ -60,7 +63,8 @@ public class AccountController : ControllerBase
 		var authorizationHeader = Request.Headers["Authorization"].ToString();
 		var token = authorizationHeader["Bearer ".Length..].Trim();
 
-		var output = await _getAccountBalanceUseCase.ExecuteAsync(new GetBalanceRequest(), token);
+		var output = await _getTransactionsUseCase.ExecuteAsync
+			(new GetTransactionsExtractRequest(), token);
 		return output is null ? BadRequest() : Ok(output);
 	}
 }
