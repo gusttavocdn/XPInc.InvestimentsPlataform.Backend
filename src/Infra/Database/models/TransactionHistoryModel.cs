@@ -19,7 +19,7 @@ public class TransactionHistoryModel
 	public string TransactionType { get; set; }
 
 	[Required]
-	public string CreatedAt { get; set; } = null!;
+	public DateTime CreatedAt { get; } = DateTime.Now;
 
 	public virtual AccountModel Account { get; set; }
 }

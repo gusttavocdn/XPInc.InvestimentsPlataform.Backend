@@ -48,9 +48,7 @@ public class ClientsRepository : IClientsRepository
 			return null;
 		return new Account
 		(
-			client.Account!.Id, client.Account.ClientId, client.Account.Balance,
-			client.Account.InvestmentsValue,
-			client.Account.TotalAssets
+			client.Account!.Id, client.Account.ClientId, client.Account.Balance
 		);
 	}
 

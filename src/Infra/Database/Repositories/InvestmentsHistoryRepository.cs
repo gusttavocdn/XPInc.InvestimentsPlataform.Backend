@@ -20,7 +20,7 @@ public class InvestmentsHistoryRepository : IInvestmentsHistoryRepository
 		var transaction = new InvestmentsHistoryModel
 		{
 			AccountId = accountId,
-			InvestmentType = InvestmentType.Buy,
+			InvestmentType = "Buy",
 			Price = asset.Price,
 			Quantity = purchasedQuantity,
 			AssetId = asset.Id

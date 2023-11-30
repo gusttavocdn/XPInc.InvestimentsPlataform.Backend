@@ -16,18 +16,10 @@ public class AccountModel
 	public decimal Balance { get; set; }
 
 	[Required]
-	[Column(TypeName = "decimal(10, 2)")]
-	public decimal InvestmentsValue { get; set; }
+	public DateTime CreatedAt { get; } = DateTime.Now;
 
 	[Required]
-	[Column(TypeName = "decimal(10, 2)")]
-	public decimal TotalAssets { get; set; }
-
-	[Required]
-	public string CreatedAt { get; set; }
-
-	[Required]
-	public string UpdatedAt { get; set; }
+	public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
 	public virtual ClientModel Client { get; set; } = null!;
 	public virtual IEnumerable<TransactionHistoryModel> TransactionHistory { get; set; } = null!;

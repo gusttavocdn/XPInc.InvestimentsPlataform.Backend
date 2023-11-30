@@ -57,36 +57,6 @@ public class ApplicationDbContext : DbContext
 			.HasForeignKey(a => a.AssetId)
 			.OnDelete(DeleteBehavior.Cascade);
 
-		modelBuilder.Entity<AccountModel>()
-			.Property(e => e.CreatedAt)
-			.ValueGeneratedOnAdd()
-			.HasDefaultValue("CURRENT_TIMESTAMP");
-
-		modelBuilder.Entity<AccountModel>()
-			.Property(e => e.UpdatedAt)
-			.ValueGeneratedOnUpdate()
-			.HasDefaultValue("CURRENT_TIMESTAMP");
-
-		modelBuilder.Entity<PortfolioModel>()
-			.Property(e => e.CreatedAt)
-			.ValueGeneratedOnAdd()
-			.HasDefaultValue("CURRENT_TIMESTAMP");
-
-		modelBuilder.Entity<PortfolioModel>()
-			.Property(e => e.UpdatedAt)
-			.ValueGeneratedOnUpdate()
-			.HasDefaultValue("CURRENT_TIMESTAMP");
-
-		modelBuilder.Entity<TransactionHistoryModel>()
-			.Property(e => e.CreatedAt)
-			.ValueGeneratedOnAdd()
-			.HasDefaultValue("CURRENT_TIMESTAMP");
-
-		modelBuilder.Entity<InvestmentsHistoryModel>()
-			.Property(e => e.CreatedAt)
-			.ValueGeneratedOnAdd()
-			.HasDefaultValue("CURRENT_TIMESTAMP");
-
 		modelBuilder.AssetsSeed();
 	}
 }

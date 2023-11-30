@@ -4,6 +4,7 @@ using API.OptionsSetup;
 using Application.Interfaces.Services;
 using Application.Interfaces.UseCases;
 using Application.UseCases;
+using Application.UseCases.Account;
 using Infra.Authentication;
 using Infra.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -22,7 +23,10 @@ public static class ServiceCollectionExtensions
 			.AddScoped<IGetAllAssetsUseCase, GetAllAssetsUseCase>()
 			.AddScoped<IGetAssetBySymbolUseCase, GetAssetBySymbolUseCase>()
 			.AddScoped<IBuyAssetUseCase, BuyAssetUseCase>()
-			.AddScoped<ISellAssetUseCase, SellAssetUseCase>();
+			.AddScoped<ISellAssetUseCase, SellAssetUseCase>()
+			.AddScoped<IDepositUseCase, DepositUseCase>()
+			.AddScoped<IWithdrawUseCase, WithdrawUseCase>()
+			.AddScoped<IGetAccountBalanceUseCase, GetAccountBalanceUseCase>();
 	}
 
 	public static void AddServices(this IServiceCollection services)

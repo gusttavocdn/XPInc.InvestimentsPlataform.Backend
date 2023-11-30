@@ -53,7 +53,7 @@ public class PortfolioRepository : IPortfolioRepository
 			{
 				AccountId = accountId,
 				AssetId = asset.Id,
-				InvestmentType = InvestmentType.Sell,
+				InvestmentType = "Sell",
 				Price = asset.Price,
 				Quantity = soldQuantity
 			}
@@ -77,6 +77,7 @@ public class PortfolioRepository : IPortfolioRepository
 	{
 		portfolio.Quantity += purchasedQuantity;
 		portfolio.AcquisitionValue += purchasedQuantity * asset.Price;
+		portfolio.UpdatedAt = DateTime.Now;
 		// portfolio.AveragePurchasePrice = portfolio.AcquisitionValue / portfolio.Quantity;
 		// portfolio.CurrentValue = portfolio.Quantity * portfolio.AveragePurchasePrice;
 		// portfolio.ProfitabilityValue = portfolio.CurrentValue - portfolio.AcquisitionValue;
@@ -98,9 +99,7 @@ public class PortfolioRepository : IPortfolioRepository
 			ProfitabilityValue = 0,
 			AveragePurchasePrice = asset.Price,
 			CurrentValue = asset.Price,
-			AcquisitionValue = asset.Price * purchasedQuantity,
-			CreatedAt = DateTime.Now.ToString(),
-			UpdatedAt = DateTime.Now.ToString()
+			AcquisitionValue = asset.Price * purchasedQuantity
 		};
 
 		await _context.Portfolios.AddAsync(portfolio);

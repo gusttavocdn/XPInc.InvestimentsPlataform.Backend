@@ -6,7 +6,7 @@ namespace Infra.Database.models;
 public class AssetModel
 {
 	[Key] [Required] [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-	public int Id { get; set; }
+	public int Id { get; init; }
 
 	[Required]
 	public string Symbol { get; set; } = string.Empty;

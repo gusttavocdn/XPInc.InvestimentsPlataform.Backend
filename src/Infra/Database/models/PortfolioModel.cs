@@ -37,10 +37,10 @@ public class PortfolioModel
 	public decimal ProfitabilityValue { get; set; }
 
 	[Required]
-	public string CreatedAt { get; set; } = null!;
+	public DateTime CreatedAt { get; } = DateTime.Now;
 
 	[Required]
-	public string UpdatedAt { get; set; } = null!;
+	public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
 	public virtual AssetModel? Asset { get; set; }
 	public virtual AccountModel? Account { get; set; }

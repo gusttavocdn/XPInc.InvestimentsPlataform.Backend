@@ -15,7 +15,7 @@ public class InvestmentsHistoryModel
 	public int AssetId { get; set; }
 
 	[Required]
-	public InvestmentType InvestmentType { get; set; }
+	public string InvestmentType { get; set; }
 
 	[Required]
 	public int Quantity { get; set; }
@@ -24,14 +24,8 @@ public class InvestmentsHistoryModel
 	public decimal Price { get; set; }
 
 	[Required]
-	public string CreatedAt { get; set; } = null!;
+	public DateTime CreatedAt { get; set; } = DateTime.Now;
 
 	public virtual AssetModel? Asset { get; set; }
 	public virtual AccountModel? Account { get; set; }
-}
-
-public enum InvestmentType
-{
-	Buy,
-	Sell
 }

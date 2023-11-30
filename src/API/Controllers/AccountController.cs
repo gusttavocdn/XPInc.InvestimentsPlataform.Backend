@@ -25,12 +25,12 @@ public class AccountController : ControllerBase
 	}
 
 	[HttpGet("balance")]
-	public async Task<IActionResult> GetAccountBalance([FromBody] GetBalanceRequest request)
+	public async Task<IActionResult> GetAccountBalance()
 	{
 		var authorizationHeader = Request.Headers["Authorization"].ToString();
 		var token = authorizationHeader["Bearer ".Length..].Trim();
 
-		var output = await _getAccountBalanceUseCase.ExecuteAsync(request, token);
+		var output = await _getAccountBalanceUseCase.ExecuteAsync(new GetBalanceRequest(), token);
 		return output is null ? BadRequest() : Ok(output);
 	}
 
