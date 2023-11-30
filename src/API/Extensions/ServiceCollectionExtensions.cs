@@ -21,7 +21,8 @@ public static class ServiceCollectionExtensions
 			.AddScoped<ISignInUseCase, SignInUseCase>()
 			.AddScoped<IGetAllAssetsUseCase, GetAllAssetsUseCase>()
 			.AddScoped<IGetAssetBySymbolUseCase, GetAssetBySymbolUseCase>()
-			.AddScoped<IBuyAssetUseCase, BuyAssetUseCase>();
+			.AddScoped<IBuyAssetUseCase, BuyAssetUseCase>()
+			.AddScoped<ISellAssetUseCase, SellAssetUseCase>();
 	}
 
 	public static void AddServices(this IServiceCollection services)

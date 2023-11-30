@@ -48,7 +48,7 @@ public class BuyAssetUseCase : IBuyAssetUseCase
 			(clientAccount.Id, clientAccountNewBalance);
 		await _investmentsHistoryRepository.AddTransaction
 			(wantedAsset, request.Quantity, clientAccount.Id);
-		await _portfolioRepository.UpsertPortfolioAsync
+		await _portfolioRepository.IncrementPortfolioAsync
 			(wantedAsset, request.Quantity, clientAccount.Id);
 		return new BuyAssetResponse
 			(wantedAsset.Symbol, request.Quantity, wantedAsset.Price, wantedAssetsTotalPrice);

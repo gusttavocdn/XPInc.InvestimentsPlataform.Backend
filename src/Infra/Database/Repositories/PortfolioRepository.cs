@@ -15,7 +15,7 @@ public class PortfolioRepository : IPortfolioRepository
 		_context = context;
 	}
 
-	public async Task<bool> UpsertPortfolioAsync
+	public async Task<bool> IncrementPortfolioAsync
 		(Asset asset, int purchasedQuantity, string accountId)
 	{
 		var portfolio = await _context.Portfolios.FirstOrDefaultAsync
@@ -26,6 +26,50 @@ public class PortfolioRepository : IPortfolioRepository
 		if (portfolio is null)
 			return await InsertPortfolioAsync(asset, purchasedQuantity, accountId);
 		return await UpdatePortfolioAsync(portfolio, asset, purchasedQuantity);
+	}
+
+	public async Task<bool> DecrementPortfolioAsync
+		(Asset asset, int soldQuantity, string accountId)
+	{
+		var assertPortfolio = await _context.Portfolios.FirstOrDefaultAsync
+		(
+			p => p.AccountId == accountId && p.Symbol == asset.Symbol
+		);
+
+		if (assertPortfolio is null)
+			return false;
+
+		assertPortfolio.Quantity -= soldQuantity;
+
+		var account = await _context.Accounts.FirstOrDefaultAsync
+		(
+			a => a.Id == accountId
+		);
+
+		account!.Balance += soldQuantity * asset.Price;
+		await _context.InvestmentsHistory.AddAsync
+		(
+			new InvestmentsHistoryModel
+			{
+				AccountId = accountId,
+				AssetId = asset.Id,
+				InvestmentType = InvestmentType.Sell,
+				Price = asset.Price,
+				Quantity = soldQuantity
+			}
+		);
+
+		switch (assertPortfolio.Quantity)
+		{
+			case < 0:
+				return false;
+			case 0:
+				_context.Portfolios.Remove(assertPortfolio);
+				return await _context.SaveChangesAsync() > 0;
+			default:
+				_context.Portfolios.Update(assertPortfolio);
+				return await _context.SaveChangesAsync() > 0;
+		}
 	}
 
 	private async Task<bool> UpdatePortfolioAsync
