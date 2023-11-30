@@ -8,4 +8,5 @@ public interface IClientsRepository
 
 	// TODO: Map correct output here
 	Task<Client?> GetByEmailAsync(string requestEmail);
+	Task<Account?> GetClientAccountAsync(string clientEmail);
 }

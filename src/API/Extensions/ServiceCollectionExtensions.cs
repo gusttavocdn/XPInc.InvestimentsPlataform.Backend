@@ -20,7 +20,8 @@ public static class ServiceCollectionExtensions
 			.AddScoped<ISignUpUseCase, SignUpUseCase>()
 			.AddScoped<ISignInUseCase, SignInUseCase>()
 			.AddScoped<IGetAllAssetsUseCase, GetAllAssetsUseCase>()
-			.AddScoped<IGetAssetBySymbolUseCase, GetAssetBySymbolUseCase>();
+			.AddScoped<IGetAssetBySymbolUseCase, GetAssetBySymbolUseCase>()
+			.AddScoped<IBuyAssetUseCase, BuyAssetUseCase>();
 	}
 
 	public static void AddServices(this IServiceCollection services)
@@ -49,8 +50,8 @@ public static class ServiceCollectionExtensions
 						ValidateIssuerSigningKey = true
 					}
 			);
-		// services.ConfigureOptions<JwtOptionsSetup>();
-		services.ConfigureOptions<JwtBearerOptionsSetup>();
+		services.ConfigureOptions<JwtOptionsSetup>();
+		// services.ConfigureOptions<JwtBearerOptionsSetup>();
 		services.AddAuthorization();
 	}
 }

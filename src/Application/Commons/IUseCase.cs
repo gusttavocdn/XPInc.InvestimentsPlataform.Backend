@@ -2,5 +2,6 @@ namespace Application.Commons;
 
 public interface IUseCase<in TRequest, TResponse>
 {
-	Task<TResponse> ExecuteAsync(TRequest request, CancellationToken cancellationToken = default);
+	Task<TResponse> ExecuteAsync
+		(TRequest request, CancellationToken cancellationToken = default);
 }

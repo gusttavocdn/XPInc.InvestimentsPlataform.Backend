@@ -40,6 +40,21 @@ public class JwtProvider : IJwtProvider
 			DateTime.UtcNow.AddHours(1),
 			signingCredentials
 		);
-		return new JwtSecurityTokenHandler().WriteToken(token);
+		var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+		return tokenString;
+	}
+
+	public TokenInfo DecodeToken(string token)
+	{
+		var handler = new JwtSecurityTokenHandler();
+		var jwtToken = handler.ReadJwtToken(token);
+
+		var tokenInfo = new TokenInfo
+		{
+			Name = jwtToken.Claims.First(claim => claim.Type == "name").Value,
+			Email = jwtToken.Claims.First(claim => claim.Type == "email").Value
+		};
+
+		return tokenInfo;
 	}
 }

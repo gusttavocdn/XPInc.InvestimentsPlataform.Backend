@@ -17,4 +17,15 @@ public class Account : BaseEntity
 		InvestmentsValue = investmentsValue;
 		TotalAssets = totalAssets;
 	}
+
+	public Account
+	(
+		string id, string clientId, decimal balance, decimal investmentsValue, decimal totalAssets
+	) : base(id)
+	{
+		ClientId = clientId;
+		Balance = balance;
+		InvestmentsValue = investmentsValue;
+		TotalAssets = totalAssets;
+	}
 }

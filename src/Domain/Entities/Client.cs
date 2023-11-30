@@ -6,6 +6,8 @@ public class Client : BaseEntity
 	public string Email { get; }
 	public string Password { get; }
 
+	public Account? Account { get; set; }
+
 	public Client(string name, string email, string password)
 	{
 		Name = name;

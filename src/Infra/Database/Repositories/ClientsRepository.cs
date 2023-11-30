@@ -39,4 +39,18 @@ public class ClientsRepository : IClientsRepository
 			return null;
 		return new Client(client.Name, client.Email, client.Password);
 	}
+
+	public async Task<Account?> GetClientAccountAsync(string clientEmail)
+	{
+		var client = await _context.Clients.Include(c => c.Account).FirstOrDefaultAsync
+			(client => client.Email == clientEmail);
+		if (client is null)
+			return null;
+		return new Account
+		(
+			client.Account!.Id, client.Account.ClientId, client.Account.Balance,
+			client.Account.InvestmentsValue,
+			client.Account.TotalAssets
+		);
+	}
 }

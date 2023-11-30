@@ -1,5 +1,5 @@
 using Application.Interfaces.Repositories;
-using Domain.Entities.Asset;
+using Domain.Entities;
 using Infra.Database.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +21,7 @@ public class AssetsRepository : IAssetsRepository
 		(
 			asset => new Asset
 			(
+				asset.Id,
 				asset.Symbol,
 				asset.Name,
 				asset.AvailableQuantity,
@@ -44,7 +45,8 @@ public class AssetsRepository : IAssetsRepository
 
 		return new Asset
 		(
-			assetFromDb.Symbol, assetFromDb.Name, assetFromDb.AvailableQuantity, assetFromDb.Price
+			assetFromDb.Id, assetFromDb.Symbol, assetFromDb.Name, assetFromDb.AvailableQuantity,
+			assetFromDb.Price
 		);
 	}
 }
