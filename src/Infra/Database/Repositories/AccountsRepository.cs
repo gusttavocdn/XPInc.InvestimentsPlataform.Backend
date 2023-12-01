@@ -74,6 +74,9 @@ public class AccountsRepository : IAccountsRepository
 		if (client is null)
 			throw new HttpStatusException(StatusCodes.Status404NotFound, "Account not found");
 
+		if (client.Account!.Balance < amount)
+			throw new HttpStatusException(StatusCodes.Status400BadRequest, "Insufficient funds");
+
 		client.Account!.Balance -= amount;
 		_context.Accounts.Update(client.Account);
 

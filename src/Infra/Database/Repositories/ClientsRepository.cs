@@ -74,7 +74,7 @@ public class ClientsRepository : IClientsRepository
 					transaction.CreatedAt
 				)
 			),
-			InvestmentsExtract = investmentTransactions.Select
+			InvestmentsTransactions = investmentTransactions.Select
 			(
 				transaction => new InvestmentTransaction
 				(

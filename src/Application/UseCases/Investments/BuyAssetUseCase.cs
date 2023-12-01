@@ -1,6 +1,4 @@
-using Application.Dtos.Requests;
 using Application.Dtos.Requests.Investments;
-using Application.Dtos.Responses;
 using Application.Dtos.Responses.Investments;
 using Application.Exceptions;
 using Application.Interfaces.Repositories;
@@ -20,7 +18,7 @@ public class BuyAssetUseCase : IBuyAssetUseCase
 	public BuyAssetUseCase
 	(
 		IJwtProvider jwtProvider, IClientsRepository clientsRepository,
-		IAssetsRepository assetsRepository, IAccountsRepository accountsRepository,
+		IAssetsRepository assetsRepository,
 		IPortfolioRepository portfolioRepository
 	)
 	{
