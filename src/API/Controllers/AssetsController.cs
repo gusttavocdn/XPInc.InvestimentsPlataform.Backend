@@ -1,4 +1,5 @@
 using Application.Dtos.Requests;
+using Application.Exceptions;
 using Application.Interfaces.UseCases;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,14 +23,38 @@ public class AssetsController : ControllerBase
 	[HttpGet]
 	public async Task<IActionResult> GetAllAssets()
 	{
-		var output = await _getAllAssetsUseCase.ExecuteAsync(new GetAllAssetsRequest());
-		return output is null ? BadRequest() : Ok(output);
+		try
+		{
+			var output = await _getAllAssetsUseCase.ExecuteAsync(new GetAllAssetsRequest());
+			return Ok(output);
+		}
+		catch (Exception)
+		{
+			return StatusCode
+			(
+				StatusCodes.Status500InternalServerError, new { Message = "Internal Server Error" }
+			);
+		}
 	}
 
 	[HttpGet("{symbol}")]
 	public async Task<IActionResult> GetAssetBySymbol(string symbol)
 	{
-		var output = await _getAssetBySymbolUseCase.ExecuteAsync(symbol);
-		return output is null ? BadRequest() : Ok(output);
+		try
+		{
+			var output = await _getAssetBySymbolUseCase.ExecuteAsync(symbol);
+			return output is null ? BadRequest() : Ok(output);
+		}
+		catch (HttpStatusException ex)
+		{
+			return StatusCode(ex.StatusCode, new { ex.Message });
+		}
+		catch (Exception)
+		{
+			return StatusCode
+			(
+				StatusCodes.Status500InternalServerError, new { Message = "Internal Server Error" }
+			);
+		}
 	}
 }

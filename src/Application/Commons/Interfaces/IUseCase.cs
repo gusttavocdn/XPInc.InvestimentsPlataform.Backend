@@ -1,4 +1,4 @@
-namespace Application.Commons;
+namespace Application.Commons.Interfaces;
 
 public interface IUseCase<in TRequest, TResponse>
 {

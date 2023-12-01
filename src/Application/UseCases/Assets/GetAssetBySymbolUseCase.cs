@@ -1,8 +1,10 @@
 using Application.Dtos.Responses;
+using Application.Exceptions;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.UseCases;
+using Microsoft.AspNetCore.Http;
 
-namespace Application.UseCases;
+namespace Application.UseCases.Assets;
 
 public class GetAssetBySymbolUseCase : IGetAssetBySymbolUseCase
 {
@@ -17,6 +19,10 @@ public class GetAssetBySymbolUseCase : IGetAssetBySymbolUseCase
 		(string request, CancellationToken cancellationToken = default)
 	{
 		var asset = await _assetsRepository.GetBySymbolAsync(request, cancellationToken);
+
+		if (asset is null)
+			throw new HttpStatusException(StatusCodes.Status404NotFound, "Asset not found");
+
 		return new GetAssetBySymbolResponse(asset);
 	}
 }
