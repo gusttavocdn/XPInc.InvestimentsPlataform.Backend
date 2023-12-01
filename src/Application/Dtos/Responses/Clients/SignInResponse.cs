@@ -1,4 +1,4 @@
-namespace Application.Dtos.Responses;
+namespace Application.Dtos.Responses.Clients;
 
 public class SignInResponse
 {

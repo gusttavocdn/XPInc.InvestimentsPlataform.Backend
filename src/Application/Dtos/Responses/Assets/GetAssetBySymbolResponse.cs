@@ -1,6 +1,6 @@
 using Domain.Entities;
 
-namespace Application.Dtos.Responses;
+namespace Application.Dtos.Responses.Assets;
 
 public class GetAssetBySymbolResponse
 {

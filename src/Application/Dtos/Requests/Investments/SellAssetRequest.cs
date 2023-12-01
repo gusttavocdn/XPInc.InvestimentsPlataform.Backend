@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Application.Dtos.Requests;
+namespace Application.Dtos.Requests.Investments;
 
 public class SellAssetRequest
 {

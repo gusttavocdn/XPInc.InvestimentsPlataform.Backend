@@ -1,4 +1,5 @@
 using Application.Dtos.Requests;
+using Application.Dtos.Requests.Investments;
 using Application.Exceptions;
 using Application.Interfaces.UseCases;
 using Microsoft.AspNetCore.Authorization;

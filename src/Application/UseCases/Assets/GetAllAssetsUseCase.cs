@@ -1,9 +1,9 @@
-using Application.Dtos.Requests;
-using Application.Dtos.Responses;
+using Application.Dtos.Requests.Assets;
+using Application.Dtos.Responses.Assets;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.UseCases;
 
-namespace Application.UseCases;
+namespace Application.UseCases.Assets;
 
 public class GetAllAssetsUseCase : IGetAllAssetsUseCase
 {

@@ -1,5 +1,7 @@
 using Application.Dtos.Requests;
+using Application.Dtos.Requests.Clients;
 using Application.Dtos.Responses;
+using Application.Dtos.Responses.Clients;
 using Application.Exceptions;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
