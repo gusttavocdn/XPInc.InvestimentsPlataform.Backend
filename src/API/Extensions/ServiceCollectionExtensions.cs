@@ -6,6 +6,7 @@ using Application.Interfaces.UseCases;
 using Application.UseCases;
 using Application.UseCases.Account;
 using Application.UseCases.Assets;
+using Application.UseCases.Investments;
 using Application.UseCases.Login;
 using Application.UseCases.Register;
 using Infra.Authentication;

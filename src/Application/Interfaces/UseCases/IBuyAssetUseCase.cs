@@ -4,6 +4,6 @@ using Application.Dtos.Responses;
 
 namespace Application.Interfaces.UseCases;
 
-public interface IBuyAssetUseCase : IUseCase<BuyAssetRequest, BuyAssetResponse>
+public interface IBuyAssetUseCase : IAuthenticatedUseCases<BuyAssetRequest, BuyAssetResponse>
 {
 }

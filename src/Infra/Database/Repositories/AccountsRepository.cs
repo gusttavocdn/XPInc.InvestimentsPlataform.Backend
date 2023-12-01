@@ -31,15 +31,29 @@ public class AccountsRepository : IAccountsRepository
 		return true;
 	}
 
-	public async Task<bool> UpdateAccountBalanceAsync(string accountId, decimal newBalance)
+	public async Task UpdateAccountBalanceWhenAssetIsPurchasedAsync
+		(string accountId, Asset asset, int purchasedQuantity)
 	{
 		var account = await _context.Accounts.FirstOrDefaultAsync(a => a.Id == accountId);
-		if (account == null)
-			return false;
+		if (account is null)
+			throw new Exception();
 
+		var newBalance = account.Balance - asset.Price * purchasedQuantity;
 		account.Balance = newBalance;
 		_context.Accounts.Update(account);
-		var updateResult = await _context.SaveChangesAsync();
-		return updateResult > 0;
+
+		await _context.InvestmentsHistory.AddAsync
+		(
+			new InvestmentsHistoryModel
+			{
+				AccountId = accountId,
+				InvestmentType = "Buy",
+				Price = asset.Price,
+				Quantity = purchasedQuantity,
+				AssetId = asset.Id
+			}
+		);
+
+		await _context.SaveChangesAsync();
 	}
 }

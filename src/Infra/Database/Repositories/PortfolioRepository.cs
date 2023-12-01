@@ -23,6 +23,25 @@ public class PortfolioRepository : IPortfolioRepository
 			p => p.AccountId == accountId && p.AssetId == asset.Id
 		);
 
+		var account = await _context.Accounts.FirstOrDefaultAsync
+		(
+			a => a.Id == accountId
+		);
+
+		account!.Balance += purchasedQuantity * asset.Price;
+
+		await _context.InvestmentsHistory.AddAsync
+		(
+			new InvestmentsHistoryModel
+			{
+				AccountId = accountId,
+				InvestmentType = "Buy",
+				Price = asset.Price,
+				Quantity = purchasedQuantity,
+				AssetId = asset.Id
+			}
+		);
+
 		if (portfolio is null)
 			return await InsertPortfolioAsync(asset, purchasedQuantity, accountId);
 		return await UpdatePortfolioAsync(portfolio, asset, purchasedQuantity);

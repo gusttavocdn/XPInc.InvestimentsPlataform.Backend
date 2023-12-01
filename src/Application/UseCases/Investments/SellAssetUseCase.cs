@@ -1,10 +1,12 @@
 using Application.Dtos.Requests;
 using Application.Dtos.Responses;
+using Application.Exceptions;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using Application.Interfaces.UseCases;
+using Microsoft.AspNetCore.Http;
 
-namespace Application.UseCases;
+namespace Application.UseCases.Investments;
 
 public class SellAssetUseCase : ISellAssetUseCase
 {
@@ -27,16 +29,19 @@ public class SellAssetUseCase : ISellAssetUseCase
 	}
 
 	public async Task<SellAssetResponse> ExecuteAsync
-		(SellAssetRequest request, CancellationToken cancellationToken = default)
+		(SellAssetRequest request, string token, CancellationToken cancellationToken = default)
 	{
-		var tokenInfo = _jwtProvider.DecodeToken(request.userToken);
+		var tokenInfo = _jwtProvider.DecodeToken(token);
 		var clientAccount = await _clientsRepository.GetClientAccountAsync(tokenInfo.Email);
+
 		var assetToSell = await _assetsRepository.GetBySymbolAsync
 			(request.AssetSymbol, cancellationToken);
 		if (assetToSell is null)
-			return null;
+			throw new HttpStatusException(StatusCodes.Status404NotFound, "Asset not found");
+
 		await _portfolioRepository.DecrementPortfolioAsync
 			(assetToSell, request.Quantity, clientAccount!.Id);
+
 		return new SellAssetResponse
 		(
 			request.AssetSymbol, request.Quantity, assetToSell.Price,

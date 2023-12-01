@@ -9,6 +9,4 @@ public class BuyAssetRequest
 
 	[Required(ErrorMessage = "The asset quantity is required")]
 	public int Quantity { get; set; }
-
-	public string userToken { get; set; }
 }
