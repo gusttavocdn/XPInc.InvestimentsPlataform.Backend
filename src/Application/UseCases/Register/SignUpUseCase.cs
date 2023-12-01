@@ -1,11 +1,12 @@
 using Application.Dtos.Requests;
-using Application.Dtos.Responses;
+using Application.Exceptions;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using Application.Interfaces.UseCases;
 using Domain.Entities;
+using Microsoft.AspNetCore.Http;
 
-namespace Application.UseCases;
+namespace Application.UseCases.Register;
 
 public class SignUpUseCase : ISignUpUseCase
 {
@@ -24,17 +25,26 @@ public class SignUpUseCase : ISignUpUseCase
 		_passwordManager = passwordManager;
 	}
 
-	public async Task<SignUpResponse> ExecuteAsync
+	public async Task<Task> ExecuteAsync
 		(SignUpRequest request, CancellationToken cancellationToken = default)
 	{
 		var newClient = new Client
 			(request.Name, request.Email, _passwordManager.Hash(request.Password));
+
+		if (await _clientRepository.GetByEmailAsync(newClient.Email) is not null)
+			throw new HttpStatusException
+				(StatusCodes.Status409Conflict, "Email already in use");
+
 		if (!await _clientRepository.CreateAsync(newClient))
-			return null;
+			throw new HttpStatusException
+				(StatusCodes.Status422UnprocessableEntity, "Failed to create Account");
 
 		var account = new Domain.Entities.Account(newClient.Id, 0);
+
 		if (!await _accountRepository.CreateAsync(account))
-			return null;
-		return new SignUpResponse();
+			throw new HttpStatusException
+				(StatusCodes.Status422UnprocessableEntity, "Failed to create Account");
+
+		return Task.CompletedTask;
 	}
 }

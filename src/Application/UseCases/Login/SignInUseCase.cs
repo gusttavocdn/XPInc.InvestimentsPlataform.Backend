@@ -1,10 +1,12 @@
 using Application.Dtos.Requests;
 using Application.Dtos.Responses;
+using Application.Exceptions;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using Application.Interfaces.UseCases;
+using Microsoft.AspNetCore.Http;
 
-namespace Application.UseCases;
+namespace Application.UseCases.Login;
 
 public class SignInUseCase : ISignInUseCase
 {
@@ -29,7 +31,7 @@ public class SignInUseCase : ISignInUseCase
 		var client = await _clientsRepository.GetByEmailAsync(request.Email);
 
 		if (client is null || !IsPasswordValid(request.Password, client.Password))
-			return null;
+			throw new HttpStatusException(StatusCodes.Status401Unauthorized, "Invalid credentials");
 
 		var token = _jwtProvider.GenerateToken(client);
 		return new SignInResponse(token);

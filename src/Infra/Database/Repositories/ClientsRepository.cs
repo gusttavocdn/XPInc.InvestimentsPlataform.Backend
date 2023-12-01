@@ -36,9 +36,7 @@ public class ClientsRepository : IClientsRepository
 	{
 		var client = await _context.Clients.FirstOrDefaultAsync
 			(client => client.Email == requestEmail);
-		if (client is null)
-			return null;
-		return new Client(client.Name, client.Email, client.Password);
+		return client is null ? null : new Client(client.Name, client.Email, client.Password);
 	}
 
 	public async Task<Account?> GetClientAccountAsync(string clientEmail)
