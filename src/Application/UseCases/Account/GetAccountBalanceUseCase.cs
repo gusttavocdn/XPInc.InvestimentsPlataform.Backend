@@ -9,12 +9,12 @@ namespace Application.UseCases.Account;
 public class GetAccountBalanceUseCase : IGetAccountBalanceUseCase
 {
 	private readonly IJwtProvider _jwtProvider;
-	private readonly IClientsRepository _clientsRepository;
+	private readonly IAccountsRepository _accountRepository;
 
-	public GetAccountBalanceUseCase(IJwtProvider jwtProvider, IClientsRepository clientsRepository)
+	public GetAccountBalanceUseCase(IJwtProvider jwtProvider, IAccountsRepository accountRepository)
 	{
 		_jwtProvider = jwtProvider;
-		_clientsRepository = clientsRepository;
+		_accountRepository = accountRepository;
 	}
 
 	public async Task<GetBalanceResponse> ExecuteAsync
@@ -24,7 +24,7 @@ public class GetAccountBalanceUseCase : IGetAccountBalanceUseCase
 	)
 	{
 		var tokenInfo = _jwtProvider.DecodeToken(token);
-		var balance = await _clientsRepository.GetAccountBalanceAsync(tokenInfo.Email);
+		var balance = await _accountRepository.GetAccountBalanceAsync(tokenInfo.Email);
 		return new GetBalanceResponse(balance);
 	}
 }

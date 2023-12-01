@@ -9,11 +9,11 @@ namespace Application.UseCases.Account;
 public class WithdrawUseCase : IWithdrawUseCase
 {
 	private readonly IJwtProvider _jwtProvider;
-	private readonly IClientsRepository _clientsRepository;
+	private readonly IAccountsRepository _accountRepository;
 
-	public WithdrawUseCase(IClientsRepository clientsRepository, IJwtProvider jwtProvider)
+	public WithdrawUseCase(IAccountsRepository clientsRepository, IJwtProvider jwtProvider)
 	{
-		_clientsRepository = clientsRepository;
+		_accountRepository = clientsRepository;
 		_jwtProvider = jwtProvider;
 	}
 
@@ -21,7 +21,7 @@ public class WithdrawUseCase : IWithdrawUseCase
 		(WithdrawRequest request, string token, CancellationToken cancellationToken = default)
 	{
 		var tokenInfo = _jwtProvider.DecodeToken(token);
-		await _clientsRepository.WithdrawAsync(tokenInfo.Email, request.Value);
+		await _accountRepository.WithdrawAsync(tokenInfo.Email, request.Value);
 		return new WithdrawResponse();
 	}
 }

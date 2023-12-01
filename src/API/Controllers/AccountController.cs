@@ -1,4 +1,5 @@
 using Application.Dtos.Requests.Account;
+using Application.Exceptions;
 using Application.Interfaces.UseCases;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,41 +31,104 @@ public class AccountController : ControllerBase
 	[HttpGet("balance")]
 	public async Task<IActionResult> GetAccountBalance()
 	{
-		var authorizationHeader = Request.Headers["Authorization"].ToString();
-		var token = authorizationHeader["Bearer ".Length..].Trim();
+		try
+		{
+			if (ModelState.IsValid is false)
+				return BadRequest(ModelState);
 
-		var output = await _getAccountBalanceUseCase.ExecuteAsync(new GetBalanceRequest(), token);
-		return output is null ? BadRequest() : Ok(output);
+			var authorizationHeader = Request.Headers["Authorization"].ToString();
+			var token = authorizationHeader["Bearer ".Length..].Trim();
+
+			var output = await _getAccountBalanceUseCase.ExecuteAsync
+				(new GetBalanceRequest(), token);
+			return Ok(output);
+		}
+		catch (HttpStatusException ex)
+		{
+			return StatusCode(ex.StatusCode, new { ex.Message });
+		}
+		catch (Exception)
+		{
+			return StatusCode
+			(
+				StatusCodes.Status500InternalServerError, new { Message = "Internal Server Error" }
+			);
+		}
 	}
 
 	[HttpPost("deposit")]
 	public async Task<IActionResult> Deposit([FromBody] DepositRequest request)
 	{
-		var authorizationHeader = Request.Headers["Authorization"].ToString();
-		var token = authorizationHeader["Bearer ".Length..].Trim();
+		try
+		{
+			if (ModelState.IsValid is false)
+				return BadRequest(ModelState);
 
-		var output = await _depositUseCase.ExecuteAsync(request, token);
-		return output is null ? BadRequest() : Ok(output);
+			var authorizationHeader = Request.Headers["Authorization"].ToString();
+			var token = authorizationHeader["Bearer ".Length..].Trim();
+
+			var output = await _depositUseCase.ExecuteAsync(request, token);
+			return Ok(output);
+		}
+		catch (HttpStatusException ex)
+		{
+			return StatusCode(ex.StatusCode, new { ex.Message });
+		}
+		catch (Exception)
+		{
+			return StatusCode
+			(
+				StatusCodes.Status500InternalServerError, new { Message = "Internal Server Error" }
+			);
+		}
 	}
 
 	[HttpPost("withdraw")]
 	public async Task<IActionResult> Withdraw([FromBody] WithdrawRequest request)
 	{
-		var authorizationHeader = Request.Headers["Authorization"].ToString();
-		var token = authorizationHeader["Bearer ".Length..].Trim();
+		try
+		{
+			var authorizationHeader = Request.Headers["Authorization"].ToString();
+			var token = authorizationHeader["Bearer ".Length..].Trim();
 
-		var output = await _withdrawUseCase.ExecuteAsync(request, token);
-		return output is null ? BadRequest() : Ok(output);
+			var output = await _withdrawUseCase.ExecuteAsync(request, token);
+			return Ok(output);
+		}
+		catch (HttpStatusException ex)
+		{
+			return StatusCode(ex.StatusCode, new { ex.Message });
+		}
+		catch (Exception)
+		{
+			return StatusCode
+			(
+				StatusCodes.Status500InternalServerError, new { Message = "Internal Server Error" }
+			);
+		}
 	}
 
 	[HttpGet("transactions")]
 	public async Task<IActionResult> GetTransactionsExtract()
 	{
-		var authorizationHeader = Request.Headers["Authorization"].ToString();
-		var token = authorizationHeader["Bearer ".Length..].Trim();
+		try
+		{
+			var authorizationHeader = Request.Headers["Authorization"].ToString();
+			var token = authorizationHeader["Bearer ".Length..].Trim();
 
-		var output = await _getTransactionsUseCase.ExecuteAsync
-			(new GetTransactionsExtractRequest(), token);
-		return output is null ? BadRequest() : Ok(output);
+			var output = await _getTransactionsUseCase.ExecuteAsync
+				(new GetTransactionsExtractRequest(), token);
+			return output is null ? BadRequest() : Ok(output);
+		}
+		catch (HttpStatusException ex)
+		{
+			return StatusCode(ex.StatusCode, new { ex.Message });
+		}
+		catch (Exception)
+		{
+			return StatusCode
+			(
+				StatusCodes.Status500InternalServerError, new { Message = "Internal Server Error" }
+			);
+		}
 	}
 }
