@@ -3,7 +3,6 @@ using System.Text;
 using API.OptionsSetup;
 using Application.Interfaces.Services;
 using Application.Interfaces.UseCases;
-using Application.UseCases;
 using Application.UseCases.Account;
 using Application.UseCases.Assets;
 using Application.UseCases.Investments;
@@ -31,7 +30,8 @@ public static class ServiceCollectionExtensions
 			.AddScoped<IDepositUseCase, DepositUseCase>()
 			.AddScoped<IWithdrawUseCase, WithdrawUseCase>()
 			.AddScoped<IGetAccountBalanceUseCase, GetAccountBalanceUseCase>()
-			.AddScoped<IGetTransactionsUseCase, GetTransactionsUseCase>();
+			.AddScoped<IGetTransactionsUseCase, GetTransactionsUseCase>()
+			.AddScoped<IGetPortfolioUseCase, GetPortfolioUseCase>();
 	}
 
 	public static void AddServices(this IServiceCollection services)
@@ -61,7 +61,6 @@ public static class ServiceCollectionExtensions
 					}
 			);
 		services.ConfigureOptions<JwtOptionsSetup>();
-		// services.ConfigureOptions<JwtBearerOptionsSetup>();
 		services.AddAuthorization();
 	}
 }

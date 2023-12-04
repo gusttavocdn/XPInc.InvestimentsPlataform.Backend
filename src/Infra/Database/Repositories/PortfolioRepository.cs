@@ -1,3 +1,4 @@
+using Application.Dtos.Responses.Investments;
 using Application.Interfaces.Repositories;
 using Domain.Entities;
 using Infra.Database.Context;
@@ -123,5 +124,33 @@ public class PortfolioRepository : IPortfolioRepository
 
 		await _context.Portfolios.AddAsync(portfolio);
 		return await _context.SaveChangesAsync() > 0;
+	}
+
+	public async Task<GetPortfolioResponse> GetPortfolioAsync(string clientEmail)
+	{
+		var account = _context.Clients.Include(c => c.Account).FirstOrDefaultAsync
+			(client => client.Email == clientEmail).Result!.Account;
+
+		var portfolios = await _context.Portfolios.Where
+			(p => p.AccountId == account!.Id).ToListAsync();
+		return new GetPortfolioResponse
+		(
+			portfolios.Select
+			(
+				p => new Portfolio
+				{
+					AssetId = p.AssetId,
+					Quantity = p.Quantity,
+					Symbol = p.Symbol,
+					AveragePurchasePrice = p.AveragePurchasePrice,
+					AcquisitionValue = p.AcquisitionValue,
+					CurrentValue = p.CurrentValue,
+					ProfitabilityPercentage = p.ProfitabilityPercentage,
+					ProfitabilityValue = p.ProfitabilityValue,
+					Id = p.Id,
+					AccountId = p.AccountId
+				}
+			).ToList()
+		);
 	}
 }

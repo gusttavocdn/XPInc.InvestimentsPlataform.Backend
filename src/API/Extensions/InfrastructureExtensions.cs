@@ -18,7 +18,7 @@ public static class InfrastructureExtensions
 
 	private static void AddMySql(this IServiceCollection services, IConfiguration configuration)
 	{
-		var connectionString = configuration.GetConnectionString("MySqlConnection");
+		var connectionString = configuration.GetConnectionString("MySqlLocal");
 
 		services.AddDbContext<ApplicationDbContext>
 		(
